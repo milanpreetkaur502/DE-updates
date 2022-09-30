@@ -2,7 +2,7 @@ import subprocess
 import json
 import time
 
-with open("/etc/entomologist/camera_control.json",'r') as file:
+with open("/etc/entomologist/camera_control.conf",'r') as file:
             data=json.load(file)
 
 for (key,value) in data.items():

@@ -121,9 +121,9 @@ def readData():
 def updateData(keyValue):
         data={}
         path="/etc/entomologist/"
-        with open(path + "camera_control.json",'r') as file:
+        with open(path + "camera_control.conf",'r') as file:
             data=json.load(file)
-        with open(path + "camera_control.json",'w') as file:
+        with open(path + "camera_control.conf",'w') as file:
             data.update(keyValue)
             #data.update({name:dataa})
             json.dump(data,file,indent=4,separators=(',', ': '))
