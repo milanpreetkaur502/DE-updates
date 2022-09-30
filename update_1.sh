@@ -54,7 +54,7 @@ chmod 644 /lib/systemd/system/rana.service
 #chmod 755 /etc/entomologitst/ento.conf
 
 rm /etc/entomologist/camera_control.conf
-wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/camera_control.conf -O /etc/entomologitst/camera_control.conf
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/camera_control.conf -O /etc/entomologist/camera_control.conf
 chmod 755 /etc/entomologitst/camera_control.conf
 
 
