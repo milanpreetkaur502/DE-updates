@@ -46,7 +46,7 @@ wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana/re
 chmod 755 /usr/sbin/rana/remove.sh
 
 rm /lib/systemd/system/rana.service
-wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana/rana.service -O /lib/systemd/system/rana.service
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana.service -O /lib/systemd/system/rana.service
 chmod 644 /lib/systemd/system/rana.service
 
 #rm /etc/entomologist/ento.conf
