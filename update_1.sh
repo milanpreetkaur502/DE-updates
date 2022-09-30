@@ -2,6 +2,7 @@
 
 systemctl stop rana
 systemctl stop devicemgr
+systemctl stop jobreceiver
 
 rm /usr/sbin/device-manager/DeviceManager/app.py
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/app.py -O /usr/sbin/device-manager/DeviceManager/app.py
@@ -66,5 +67,9 @@ chmod 755 /usr/sbin/camera/cam_set.py
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/cam_set.service -O /lib/systemd/system/cam_set.service
 chmod 644 /lib/systemd/system/cam_set.service
 
+rm /usr/sbin/jobreceiver/jobReceiver.py
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/jobReceiver.py -O /usr/sbin/jobreceiver/jobReceiver.py
+chmod 755 /usr/sbin/jobreceiver/jobReceiver.py
 
 systemctl start devicemgr
+systemctl start jobreceiver
