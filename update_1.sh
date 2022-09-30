@@ -17,29 +17,41 @@ wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceM
 chmod 755 /usr/sbin/device-manager/DeviceManager/templates/files.html
 
 
-rm /usr/sbin/device-manager/DeviceManager/templates/videofeed.html
-wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/templates/videofeed.html -O /usr/sbin/device-manager/DeviceManager/templates/videofeed.html
-chmod 755 /usr/sbin/device-manager/DeviceManager/templates/videofeed.html
+rm /usr/sbin/device-manager/DeviceManager/templates/videoFeed.html
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/templates/videoFeed.html -O /usr/sbin/device-manager/DeviceManager/templates/videoFeed.html
+chmod 755 /usr/sbin/device-manager/DeviceManager/templates/videoFeed.html
 
 
 rm /usr/sbin/device-manager/DeviceManager/templates/configurations.html
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/templates/configurations.html -O /usr/sbin/device-manager/DeviceManager/templates/configurations.html
 chmod 755 /usr/sbin/device-manager/DeviceManager/templates/configurations.html
 
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/job_data.sh -O /usr/sbin/device-manager/DeviceManager/job_data.sh
+chmod 755 /usr/sbin/device-manager/DeviceManager/job_data.sh
+
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/cellular.sh -O /usr/sbin/device-manager/DeviceManager/cellular.sh
+chmod 755 /usr/sbin/device-manager/DeviceManager/cellular.sh
+
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/storage_state.sh -O /usr/sbin/device-manager/DeviceManager/storage_state.sh
+chmod 755 /usr/sbin/device-manager/DeviceManager/storage_state.sh
+
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/render.mp4 -O /usr/sbin/device-manager/DeviceManager/render.mp4
+chmod 755 /usr/sbin/device-manager/DeviceManager/render.mp4
+
 rm /usr/sbin/rana/rana.sh
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana/rana.sh  -O /usr/sbin/rana/rana.sh
-chmod 755 /usr/sbin/camera/rana.sh
+chmod 755 /usr/sbin/rana/rana.sh
 
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana/remove.sh  -O /usr/sbin/rana/remove.sh
-chmod 755 /usr/sbin/camera/remove.sh
+chmod 755 /usr/sbin/rana/remove.sh
 
 rm /lib/systemd/system/rana.service
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana/rana.service -O /lib/systemd/system/rana.service
 chmod 644 /lib/systemd/system/rana.service
 
-rm /etc/entomologist/ento.conf
-wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/ento.conf -O /etc/entomologitst/ento.conf
-chmod 755 /etc/entomologitst/ento.conf
+#rm /etc/entomologist/ento.conf
+#wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/ento.conf -O /etc/entomologitst/ento.conf
+#chmod 755 /etc/entomologitst/ento.conf
 
 rm /etc/entomologist/camera_control.conf
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/camera_control.conf -O /etc/entomologitst/camera_control.conf
