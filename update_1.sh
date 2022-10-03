@@ -52,12 +52,12 @@ wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/rana.se
 chmod 644 /lib/systemd/system/rana.service
 
 #rm /etc/entomologist/ento.conf
-#wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/ento.conf -O /etc/entomologitst/ento.conf
-#chmod 755 /etc/entomologitst/ento.conf
+#wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/ento.conf -O /etc/entomologist/ento.conf
+#chmod 755 /etc/entomologist/ento.conf
 
 rm /etc/entomologist/camera_control.conf
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/camera_control.conf -O /etc/entomologist/camera_control.conf
-chmod 755 /etc/entomologitst/camera_control.conf
+chmod 755 /etc/entomologist/camera_control.conf
 
 
 mkdir /usr/sbin/camera
