@@ -80,4 +80,5 @@ chmod 755 /usr/sbin/gps/gps.sh
 systemctl start devicemgr
 systemctl start jobreceiver
 systemctl start gps
+systemctl enable cam_set
 
