@@ -3,6 +3,7 @@
 systemctl stop rana
 systemctl stop devicemgr
 systemctl stop jobreceiver
+systemctl stop gps
 
 rm /usr/sbin/device-manager/DeviceManager/app.py
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/DeviceManager/app.py -O /usr/sbin/device-manager/DeviceManager/app.py
@@ -71,5 +72,12 @@ rm /usr/sbin/jobreceiver/jobReceiver.py
 wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/jobReceiver.py -O /usr/sbin/jobreceiver/jobReceiver.py
 chmod 755 /usr/sbin/jobreceiver/jobReceiver.py
 
+
+rm /usr/sbin/gps/gps.sh
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/gps.sh -O /usr/sbin/gps/gps.sh
+chmod 755 /usr/sbin/gps/gps.sh
+
 systemctl start devicemgr
 systemctl start jobreceiver
+systemctl start gps
+
