@@ -114,12 +114,8 @@ def readData():
     else:
         data['cellular']=tmp
 
-    #dbg=subprocess.call(["cat","/tmp/debug_modem"])
-    dbg=subprocess.Popen(["cat","/tmp/debug_modem"],stdout=subprocess.PIPE)    
-    dbg=dbg.stdout.readlines()
                 
-    print(dbg)      
-    return data,dbg
+    return data
 
 # update camera controls
 def updateData(keyValue):
@@ -256,9 +252,7 @@ def dashboard():
             "battery_parameters":{"Voltage":2.5,"Internal_temperature":38,"Average_current":2.7},
             "generalInfo":{"board_serial":34534,"board_type":"NRF","board_revision":2.3}
         }
-        dat,db=readData()
-        print(db)
-        return render_template('Dashboard.html',data=dat,dbg=db)
+        return render_template('Dashboard.html',data=readData())
     return redirect(url_for('login'))
 
 @app.route('/logout')
