@@ -341,8 +341,6 @@ def parse(jobconfig,client):
                         payload = {
                             "device_id": jobconfig['deviceId'],
                             "ts": f"{datetime.now()}",
-                            "request_id": 245,
-                            "user": "milan",
                             "category": "job",
                             "status" : "success",
                             "value": {
