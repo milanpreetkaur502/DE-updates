@@ -41,7 +41,7 @@ t_pub_image = f"declient/{SERIAL_ID}/image/resp"
 
 
 # subscribe topics
-t_sub_job = "cameraDevice/job/D0315"
+t_sub_job = f'cameraDevice/job/{SERIAL_ID}'
 t_sub_data = f"declient/{SERIAL_ID}/data/req"
 t_sub_config = f"declient/{SERIAL_ID}/config/req"
 t_sub_image = f"declient/{SERIAL_ID}/image/req"
