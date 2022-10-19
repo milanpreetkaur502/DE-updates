@@ -34,14 +34,14 @@ port = 8883
 t_pub_data = f"declient/{SERIAL_ID}/data/resp"
 t_pub_config = f"declient/{SERIAL_ID}/config/resp"
 t_pub_image = f"declient/{SERIAL_ID}/image/resp"
-t_pub_job = f"declient/{SERIAL_ID}/job/resp"
+
 
 #topic_pub_devicestats = "device_manager/devicestats/" + device_id
 #topic_sub_config = "device_manager/config/" + device_id
 
 
 # subscribe topics
-t_sub_job = f"cameraDevice/job/{SERIAL_ID}"
+t_sub_job = f'cameraDevice/job/{SERIAL_ID}'
 t_sub_data = f"declient/{SERIAL_ID}/data/req"
 t_sub_config = f"declient/{SERIAL_ID}/config/req"
 t_sub_image = f"declient/{SERIAL_ID}/image/req"
@@ -336,23 +336,6 @@ def parse(jobconfig,client):
                                 log_thread.start()
 
                         log.info("JOB RECIEVED and PARSED Successfully..")
-
-                        # acknowledment for job
-                        payload = {
-                            "device_id": jobconfig['deviceId'],
-                            "ts": f"{datetime.now()}",
-                            "category": "job",
-                            "status" : "success",
-                            "value": {
-                                "Time-Zone": "Asia/Kolkata",
-                                "Device-On-Time": jobconfig['device']['Device-On-Time'],
-                                "Device-Off-Time": jobconfig['device']['Device-Off-Time'],
-                                "Device-Test-Flag": jobconfig['device']['Device-Test-Flag'],
-                                "Device-Test-Duration": jobconfig['device']['Device-Test-Duration']
-                              }
-                        }
-                        client.publish(t_pub_job, json.dumps(payload), 0)
-
         except:
                 log.info("Tried to parsed and failed..")
 
