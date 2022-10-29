@@ -69,7 +69,7 @@ wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/cam_set
 chmod 644 /lib/systemd/system/cam_set.service
 
 rm /usr/sbin/jobreceiver/jobReceiver.py
-wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/main/jobReceiver.py -O /usr/sbin/jobreceiver/jobReceiver.py
+wget https://raw.githubusercontent.com/milanpreetkaur502/DE-updates/5deb8af90fd16979529b9558625491e783f3c0a3/jobReceiver.py -O /usr/sbin/jobreceiver/jobReceiver.py
 chmod 755 /usr/sbin/jobreceiver/jobReceiver.py
 
 
