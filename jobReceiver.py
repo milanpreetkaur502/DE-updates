@@ -125,7 +125,7 @@ def devicestats():
             "mac": readfile("/tmp/network_address")["mac"],
             "ip": readfile("/tmp/network_address")["ip"],
             "time": f"{datetime.now()}",
-            "devicestats": get_device_stats(),
+            "devicestats": readfile("/tmp/devicestats"),
             "gps": readfile("/tmp/gps")
     }
     return json.dumps(payload)
@@ -174,6 +174,9 @@ def device_payload(client,data):
     subprocess.call(["/usr/sbin/device-manager/DeviceManager/storage_state.sh"])
     subprocess.call(["/usr/sbin/device-manager/DeviceManager/cellular.sh"])
     subprocess.call(["/usr/sbin/jobreceiver/nif_up.sh"])
+    #call for modem data
+    subprocess.call(["/usr/sbin/jobreceiver/data_usage.sh"])
+
 
     payload = {
         "device_id": SERIAL_ID,
@@ -189,7 +192,8 @@ def device_payload(client,data):
             "gps": readfile("/tmp/gps"),
             "storage": readfile("/tmp/storage"),
             "cellular": readfile("/tmp/cellular"),
-            "job": readfile("/tmp/job")
+            "job": readfile("/tmp/job"),
+            "modem": readfile("/tmp/modem")
             }
         }
     client.publish(t_pub_data, json.dumps(payload), 0)
