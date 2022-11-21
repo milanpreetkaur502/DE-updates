@@ -1,0 +1,92 @@
+#!/bin/sh
+
+set -e
+
+STATE="$1"
+FILES="$2"
+
+usbin=/usr/sbin
+conf=/etc/entomologist
+ser=/lib/systemd/system
+service=sample
+
+
+
+ser_flag()
+{
+       systemctl -q is-active $service && touch /tmp/mender_FLG && systemctl stop $service || echo "service not running"
+
+}
+
+
+case "$STATE" in
+    SupportsRollback)
+        echo "Yes"
+    ;;
+
+    ArtifactInstall)
+        ser_flag
+        #systemctl -q is-active $service && touch /tmp/mender_FLG && systemctl stop $service || echo "service not running"       
+
+        # create backup file
+        cp $usbin/bws-sample/sample.py $usbin/bws-sample/sample_b.py
+        cp $conf/sample.conf $conf/sample_b.conf
+        cp $ser/sample.service $ser/sample_b.service
+
+
+        if [ -f "$FILES/files/sample.py" ]; then
+            cp "$FILES"/files/sample.py $usbin/bws-sample/ 
+        fi
+
+        if [ -f "$FILES/files/sample.conf" ]; then
+            cp "$FILES"/files/sample.conf $conf/
+        fi
+
+        if [ -f "$FILES/files/sample.service" ]; then
+            cp "$FILES"/files/sample.service $ser/
+        fi
+
+        #removing backup files   
+        if [ -f "$usbin/bws-sample/sample_b.py" ]; then
+            rm $usbin/bws-sample/sample_b.py
+        fi
+
+        if [ -f "$conf/sample_b.conf" ]; then
+            rm $conf/sample_b.conf
+        fi
+
+        if [ -f "$ser/sample_b.service" ]; then
+            rm $ser/sample_b.service
+        fi
+
+        systemctl daemon-reload
+        
+        if [ -f "/tmp/mender_FLG" ];then    
+            systemctl start sample.service
+            rm /tmp/mender_FLG 
+        fi
+        ;;
+
+    ArtifactRollback)
+        if [ -f "$usbin/bws-sample/sample_b.py" ]; then
+            mv $usbin/bws-sample/sample_b.py $usbin/bws-sample/sample.py
+        fi
+
+        if [ -f "$conf/sample_b.conf" ]; then
+            mv $conf/sample_b.conf $conf/sample.conf
+        fi
+        
+        if [ -f "$ser/sample_b.service" ]; then
+            mv $ser/sample_b.service $ser/sample.service          
+        fi
+
+                
+        systemctl daemon-reload
+        if [ -f "/tmp/mender_FLG" ];
+        then
+            systemctl start $service
+            rm /tmp/mender_FLG
+        fi
+        ;;
+esac
+exit 0
