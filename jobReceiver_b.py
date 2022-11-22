@@ -350,9 +350,11 @@ def parse(jobconfig,client):
                             "category": "job",
                             "status" : "success",
                             "value": {
-                                "Time-Zone": jobconfig['device']['Time-Zone'],
+                                "Time-Zone": "Asia/Kolkata",
                                 "Device-On-Time": jobconfig['device']['Device-On-Time'],
                                 "Device-Off-Time": jobconfig['device']['Device-Off-Time'],
+                                "Device-Test-Flag": jobconfig['device']['Device-Test-Flag'],
+                                "Device-Test-Duration": jobconfig['device']['Device-Test-Duration']
                               }
                         }
                         client.publish(t_pub_job, json.dumps(payload), 0)
