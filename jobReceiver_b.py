@@ -201,7 +201,7 @@ def device_payload(client,data):
 
 def upload_image(client,url):
         #print(url)
-        subprocess.call("/home/root/bws/image_capture/image_capture.sh")
+        subprocess.call("/usr/sbin/jobreceiver/image_capture.sh")
         with open("test_image.jpeg",'rb') as f:
                 files = {'file': (url['fields']['key'],f)}
                 http_resp = requests.post(url['url'], data=url['fields'], files = files)
@@ -350,11 +350,9 @@ def parse(jobconfig,client):
                             "category": "job",
                             "status" : "success",
                             "value": {
-                                "Time-Zone": "Asia/Kolkata",
+                                "Time-Zone": jobconfig['device']['Time-Zone'],
                                 "Device-On-Time": jobconfig['device']['Device-On-Time'],
                                 "Device-Off-Time": jobconfig['device']['Device-Off-Time'],
-                                "Device-Test-Flag": jobconfig['device']['Device-Test-Flag'],
-                                "Device-Test-Duration": jobconfig['device']['Device-Test-Duration']
                               }
                         }
                         client.publish(t_pub_job, json.dumps(payload), 0)
