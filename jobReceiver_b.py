@@ -10,6 +10,7 @@ import json
 import threading
 import logging as log
 import subprocess
+import cv2
 #from logsUpload import upload_log_file
 
 #log.basicConfig(filename='/var/tmp/job.log', filemode='w', level=log.INFO, format='[%(asctime)s]- %(message)s', datefmt='%d-%m-%Y %I:%M:%S %p')
@@ -201,8 +202,17 @@ def device_payload(client,data):
 
 def upload_image(client,url):
         #print(url)
-        subprocess.call("/usr/sbin/jobreceiver/image_capture.sh")
-        with open("test_image.jpeg",'rb') as f:
+        while os.path.exists('/tmp/rana_active'):
+            time.sleep(0.05)
+        camera = cv2.VideoCapture(2)  # use 0 for web camera
+        camera.set(cv2.CAP_PROP_FPS,60)
+        camera.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+        camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+        success, frame = camera.read()  # read the camera frame
+        cv2.imwrite('/usr/sbin/jobreceiver/test_image.jpeg',frame)
+        camera.release()
+        #subprocess.call("/usr/sbin/jobreceiver/image_capture.sh")
+        with open("/usr/sbin/jobreceiver/test_image.jpeg",'rb') as f:
                 files = {'file': (url['fields']['key'],f)}
                 http_resp = requests.post(url['url'], data=url['fields'], files = files)
                 resp_code = http_resp.status_code
@@ -328,8 +338,8 @@ def parse(jobconfig,client):
                         if 'jobId' in jobconfig:
                                 job_id=jobconfig['jobId']
                                 updateData("device",{"JOB_ID":job_id})
-
-
+                        
+                        timeZone=" "
                         if 'Time-Zone' in jobconfig['device']:
                                 timeZone=jobconfig['device']['Time-Zone']
                                 updateData("device",{"Time-Zone":timeZone})
@@ -350,9 +360,10 @@ def parse(jobconfig,client):
                             "category": "job",
                             "status" : "success",
                             "value": {
-                                "Time-Zone": jobconfig['device']['Time-Zone'],
-                                "Device-On-Time": jobconfig['device']['Device-On-Time'],
-                                "Device-Off-Time": jobconfig['device']['Device-Off-Time'],
+                                "TimeZone": timeZone,
+                                "DeviceOnTime": jobconfig['device']['Device-On-Time'],
+                                "DeviceOffTime": jobconfig['device']['Device-Off-Time'],
+                                "jobId": jobconfig['jobId']
                               }
                         }
                         client.publish(t_pub_job, json.dumps(payload), 0)

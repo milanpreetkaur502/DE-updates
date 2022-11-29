@@ -36,6 +36,7 @@ t_pub_data = f"declient/{SERIAL_ID}/data/resp"
 t_pub_config = f"declient/{SERIAL_ID}/config/resp"
 t_pub_image = f"declient/{SERIAL_ID}/image/resp"
 t_pub_job = f"declient/{SERIAL_ID}/job/resp"
+t_pub_mender = f"declient/{SERIAL_ID}/mender/resp"
 
 #topic_pub_devicestats = "device_manager/devicestats/" + device_id
 #topic_sub_config = "device_manager/config/" + device_id
@@ -46,11 +47,12 @@ t_sub_job = f"cameraDevice/job/{SERIAL_ID}"
 t_sub_data = f"declient/{SERIAL_ID}/data/req"
 t_sub_config = f"declient/{SERIAL_ID}/config/req"
 t_sub_image = f"declient/{SERIAL_ID}/image/req"
+t_sub_mender = f"declient/{SERIAL_ID}/mender/req"
 
 path = "/etc/entomologist/"
 
 # multiple subscribe
-SUB_TOPIC = [(t_sub_job,0),(t_sub_data,0),(t_sub_config,0),(t_sub_image,0)]
+SUB_TOPIC = [(t_sub_job,0),(t_sub_data,0),(t_sub_config,0),(t_sub_image,0),(t_sub_mender,0)]
 
 # #DE board certificate path
 rootCA="/etc/entomologist/cert/AmazonRootCA1.pem"
@@ -232,6 +234,27 @@ def data_handler(client,data):
     if data['category'] == "camera":
         camera_payload(client,data)
 
+def mender_log(client, data):
+    try:
+        var = subprocess.check_output("mender show-provides".split())
+        output = var.decode('utf-8')
+        output = output.split('\n')
+    except:
+        output="Error - mender log"
+
+    payload = {
+        "device_id": SERIAL_ID,
+        "ts": f"{datetime.now()}",
+        "request_id": data['request_id'],
+        "user": data['user'],
+        "category": data['category'],
+        "status" : "sucess",
+        "value": {
+            "mender_log": output
+            }
+        }
+    client.publish(t_pub_mender, json.dumps(payload), 0)
+
 # update camera controls
 def update_cam_ctrl(keyValue):
         data={}
@@ -408,9 +431,13 @@ def on_message_data(client, userdata, message):
 
 
 def on_message_job(client, userdata, message):
-    print("msg arrvd")
     jobconfig = json.loads(message.payload.decode('utf-8'))
     t_job = threading.Thread(name='parse', target=parse,args=(jobconfig,client))
+    t_job.start()
+
+def on_message_mender(client, userdata, message):
+    data = json.loads(message.payload.decode('utf-8'))
+    t_job = threading.Thread(target=mender_log,args=(client, data))
     t_job.start()
 
 
@@ -422,7 +449,7 @@ client.message_callback_add(t_sub_job, on_message_job)
 client.message_callback_add(t_sub_data, on_message_data)
 client.message_callback_add(t_sub_config, on_message_config)
 client.message_callback_add(t_sub_image, on_message_image)
-
+client.message_callback_add(t_sub_mender, on_message_mender)
 
 # trying to connect
 try:

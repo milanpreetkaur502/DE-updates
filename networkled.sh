@@ -28,7 +28,7 @@ boot='https://ush9tkb8hj.execute-api.us-west-2.amazonaws.com/boot?deviceId='$Ser
 #curl -s --connect-timeout 5  $boot
 
 net_status=not_connected
-net_status=$(curl --connect-timeout 10 -sI http://www.google.com | awk '/200/ {print $2}')
+net_status=$(curl --connect-timeout 10 -sI http://www.google.com | awk '/200 OK/ {print $2}')
 
 while true
 do
@@ -38,7 +38,7 @@ do
   fi
   echo "No Internet" > /tmp/netstatus
   sleep 10
-  net_status=$(curl --connect-timeout 10 -sI http://www.google.com | awk '/200/ {print $2}')
+  net_status=$(curl --connect-timeout 10 -sI http://www.google.com | awk '/200 OK/ {print $2}')
 done
 
 curl -s --connect-timeout 10  $boot
@@ -64,7 +64,7 @@ do
      job_status
      echo $job
      address='https://ush9tkb8hj.execute-api.us-west-2.amazonaws.com/hbeat?deviceId='$SerialID'&job='$job
-     internet_status_google=$(curl --connect-timeout 10 -sI http://www.google.com | awk '/200/ {print $2}')
+     internet_status_google=$(curl --connect-timeout 10 -sI http://www.google.com | awk '/200 OK/ {print $2}')
      internet_status_aws=$(curl -s --connect-timeout 10  $address | awk '/OK/ {print $1}'| tr -d '"')
 
 
